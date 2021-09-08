@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDestDotNet", "HelpDestDotNet\HelpDestDotNet.csproj", "{9C582ACF-A32B-4993-9375-C3311EA23294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDestDotNet", "HelpDestDotNet\HelpDestDotNet.csproj", "{9C582ACF-A32B-4993-9375-C3311EA23294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.HelpDesk", "Library.HelpDesk\Library.HelpDesk.csproj", "{6161D2BD-14CC-4149-81C6-D5FAEF06B935}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9C582ACF-A32B-4993-9375-C3311EA23294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C582ACF-A32B-4993-9375-C3311EA23294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C582ACF-A32B-4993-9375-C3311EA23294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6161D2BD-14CC-4149-81C6-D5FAEF06B935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6161D2BD-14CC-4149-81C6-D5FAEF06B935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6161D2BD-14CC-4149-81C6-D5FAEF06B935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6161D2BD-14CC-4149-81C6-D5FAEF06B935}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
