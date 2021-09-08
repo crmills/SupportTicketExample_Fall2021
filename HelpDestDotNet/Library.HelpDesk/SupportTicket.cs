@@ -2,22 +2,13 @@
 
 namespace Library.HelpDesk
 {
-    public class SupportTicket
+    public class SupportTicket : ItemBase
     {
-        private static int currentId = 1;
-        public SupportTicket()
-        {
-            Id = currentId++;
+        public SupportTicket() : base() {
+
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public DateTime DateAdded { get; set; }
-
-        public SupportTicket Parent { get; set; }
 
         public override string ToString()
         {

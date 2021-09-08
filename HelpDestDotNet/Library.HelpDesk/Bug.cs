@@ -1,6 +1,9 @@
-﻿namespace Library.HelpDesk
+﻿using System.Collections.Generic;
+
+namespace Library.HelpDesk
 {
-    class Bug
+    public class Bug : ItemBase
     {
+        public List<string> RepoSteps = new List<string>();
     }
 }

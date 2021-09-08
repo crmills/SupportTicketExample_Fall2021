@@ -9,7 +9,7 @@ namespace HelpDestDotNet
     {
         static void Main(string[] args)
         {
-            var ticketList = new List<SupportTicket>();
+            var ticketList = new List<ItemBase>();
             Console.WriteLine("Welcome to the help desk!");
             bool cont = true;
 
@@ -79,7 +79,7 @@ namespace HelpDestDotNet
 
             }
         }
-        public static void CreateOrEditSupportTicket(List<SupportTicket> ticketList, SupportTicket ticket = null)
+        public static void CreateOrEditSupportTicket(List<ItemBase> ticketList, ItemBase ticket = null)
         {
             bool isNewTicket = false;
             if(ticket == null)
@@ -104,14 +104,16 @@ namespace HelpDestDotNet
                 ticket.Priority = 3;
             }
 
-            Console.WriteLine("What is the deadline?");
-            if(DateTime.TryParse(Console.ReadLine(), out DateTime deadline))
-            {
-                ticket.Deadline = deadline;
-            } else
-            {
-                Console.WriteLine("Invalie choice, defaulting to today");
-                ticket.Deadline = DateTime.Today;
+            if(ticket is SupportTicket) { 
+                Console.WriteLine("What is the deadline?");
+                if(DateTime.TryParse(Console.ReadLine(), out DateTime deadline))
+                {
+                    (ticket as SupportTicket).Deadline = deadline;
+                } else
+                {
+                    Console.WriteLine("Invalid choice, defaulting to today");
+                    (ticket as SupportTicket).Deadline = DateTime.Today;
+                }
             }
 
             ticket.DateAdded = DateTime.Now;
@@ -122,7 +124,7 @@ namespace HelpDestDotNet
             }
         }
 
-        public static void PrintTicketList(List<SupportTicket> ticketList)
+        public static void PrintTicketList(List<ItemBase> ticketList)
         {
             foreach (var ticket in ticketList)
             {
