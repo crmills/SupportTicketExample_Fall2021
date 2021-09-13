@@ -10,6 +10,9 @@ namespace Library.HelpDesk
     {
         private static int currentId = 1;
         private int _id = -1;
+
+        object _lock = new object();
+
         public ItemBase()
         {
         }
@@ -17,11 +20,15 @@ namespace Library.HelpDesk
         public int Id { 
             get
             {
-                if(_id < 0)
+                lock(_lock)
                 {
-                    _id = currentId++;
+                    if (_id < 0)
+                    {
+                        _id = currentId++;
+                    }
+                    return _id;
                 }
-                return _id;
+
             }
         }
         public string Name { get; set; }

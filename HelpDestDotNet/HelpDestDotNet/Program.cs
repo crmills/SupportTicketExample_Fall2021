@@ -1,6 +1,8 @@
 ﻿using Library.HelpDesk;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace HelpDestDotNet
@@ -9,7 +11,16 @@ namespace HelpDestDotNet
     {
         static void Main(string[] args)
         {
-            var ticketList = new List<ItemBase>();
+            List<ItemBase> ticketList = null;
+            if (File.Exists("SaveData.json"))
+            {
+                //deserialize the list
+                ticketList = JsonConvert.DeserializeObject<List<ItemBase>>(File.ReadAllText("SaveData.json"));
+            } else
+            {
+                ticketList = new List<ItemBase>();
+            }
+            var ticketNavigator = new ListNavigator<ItemBase>(ticketList, 2);
             Console.WriteLine("Welcome to the help desk!");
             bool cont = true;
 
@@ -33,7 +44,7 @@ namespace HelpDestDotNet
                         case 2:
                             //edit
                             Console.WriteLine("Which would you like to edit?");
-                            PrintTicketList(ticketList);
+                            PrintTicketList(ticketNavigator);
                             if (int.TryParse(Console.ReadLine(), out int editChoice))
                             {
                                 var ticketToEdit = ticketList.FirstOrDefault(t => t.Id == editChoice);
@@ -46,7 +57,7 @@ namespace HelpDestDotNet
                         case 3:
                             //delete
                             Console.WriteLine("Which would you like to delete?");
-                            PrintTicketList(ticketList);
+                            PrintTicketList(ticketNavigator);
                             if(int.TryParse(Console.ReadLine(), out int deleteChoice))
                             {
                                 var ticketToDelete = ticketList.FirstOrDefault(t => t.Id == deleteChoice);
@@ -58,14 +69,13 @@ namespace HelpDestDotNet
                             break;
                         case 4:
                             //list
-                            foreach(var ticket in ticketList)
-                            {
-                                Console.WriteLine(ticket.ToString());
-                            }
+                            PrintTicketList(ticketNavigator);
                             break;
                         case 5:
                             //exit
                             cont = false;
+
+                            File.WriteAllText("SaveData.json", JsonConvert.SerializeObject(ticketList));
                             break;
                         default:
                             Console.WriteLine("Sorry, try again");
@@ -124,12 +134,45 @@ namespace HelpDestDotNet
             }
         }
 
-        public static void PrintTicketList(List<ItemBase> ticketList)
+        public static void PrintTicketList(ListNavigator<ItemBase> itemNavigator)
         {
-            foreach (var ticket in ticketList)
+            //foreach (var ticket in ticketList)
+            //{
+            //    Console.WriteLine(ticket.ToString());
+            //}
+            bool isNavigating = true;
+            while(isNavigating)
             {
-                Console.WriteLine(ticket.ToString());
+                var page = itemNavigator.GetCurrentPage();
+                foreach (var item in page)
+                {
+                    Console.WriteLine($"{item.Value}");
+                }
+
+                if (itemNavigator.HasPreviousPage)
+                {
+                    Console.WriteLine("P. Previous");
+                }
+
+                if (itemNavigator.HasNextPage)
+                {
+                    Console.WriteLine("N. Next");
+                }
+
+                var selection = Console.ReadLine();
+                if(selection.Equals("P", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    itemNavigator.GoBackward();
+                } else if (selection.Equals("N", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    itemNavigator.GoForward();
+                } else
+                {
+                    isNavigating = false;
+                }
+
             }
+
             Console.WriteLine();
         }
     }
