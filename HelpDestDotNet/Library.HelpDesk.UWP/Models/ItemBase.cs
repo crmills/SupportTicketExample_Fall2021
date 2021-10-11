@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
-namespace Library.HelpDesk
+namespace Library.HelpDesk.Models
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class ItemBase
     {
         private static int currentId = 1;

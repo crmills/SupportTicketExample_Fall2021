@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using Utilities;
 
-namespace Library.HelpDesk
+namespace Library.HelpDesk.Models
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class SupportTicket : ItemBase
     {
         public SupportTicket() : base() {

@@ -1,4 +1,5 @@
-﻿using Library.HelpDesk;
+﻿using Library.HelpDesk.Models;
+using Library.HelpDesk;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace HelpDestDotNet
         static void Main(string[] args)
         {
             List<ItemBase> ticketList = null;
-            if (File.Exists("SaveData.json"))
+            var path = Environment.SpecialFolder.LocalApplicationData;
+            if (File.Exists($"{path}\\SaveData.json"))
             {
                 //deserialize the list
                 ticketList = JsonConvert.DeserializeObject<List<ItemBase>>(File.ReadAllText("SaveData.json"));
@@ -74,8 +76,8 @@ namespace HelpDestDotNet
                         case 5:
                             //exit
                             cont = false;
-
-                            File.WriteAllText("SaveData.json", JsonConvert.SerializeObject(ticketList));
+                            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All  };
+                            File.WriteAllText("SaveData.json", JsonConvert.SerializeObject(ticketList, settings));
                             break;
                         default:
                             Console.WriteLine("Sorry, try again");
