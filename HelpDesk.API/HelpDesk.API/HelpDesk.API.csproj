@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Library.HelpDesk">
-      <HintPath>..\..\HelpDestDotNet\Library.HelpDesk\bin\Debug\net5.0\Library.HelpDesk.dll</HintPath>
+    <Reference Include="Library.HelpDesk.UWP">
+      <HintPath>..\..\HelpDestDotNet\Library.HelpDesk.UWP\bin\x86\Debug\Library.HelpDesk.UWP.dll</HintPath>
     </Reference>
   </ItemGroup>
 
