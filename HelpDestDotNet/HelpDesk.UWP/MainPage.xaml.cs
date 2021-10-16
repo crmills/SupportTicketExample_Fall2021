@@ -34,6 +34,7 @@ namespace HelpDesk.UWP
         {
             var diag = new ItemDialog((DataContext as MainViewModel).SupportTickets);
             await diag.ShowAsync();
+
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)

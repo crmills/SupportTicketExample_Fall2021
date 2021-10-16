@@ -1,6 +1,9 @@
 ﻿using Library.HelpDesk.Models;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using Utilities;
+using Newtonsoft.Json;
+using HelpDesk.UWP.ViewModels;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -9,21 +12,23 @@ namespace HelpDesk.UWP.Dialogs
     public sealed partial class ItemDialog : ContentDialog
     {
         private IList<ItemBase> supportTickets;
+
+        //constructor for a NEW item
         public ItemDialog(IList<ItemBase> supportTickets)
         {
             InitializeComponent();
-            DataContext = new SupportTicket();
+            DataContext = new ItemDialogViewModel();
             this.supportTickets = supportTickets;
         }
 
-        public ItemDialog(IList<ItemBase> supportTickets, ItemBase ticket)
+        public ItemDialog(IList<ItemBase> supportTickets, ItemBase item)
         {
             InitializeComponent();
-            DataContext = ticket;
+            DataContext = new ItemDialogViewModel(item);
             this.supportTickets = supportTickets;
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var ticketToEdit = DataContext as SupportTicket;
             var i = supportTickets.IndexOf(ticketToEdit);
@@ -37,6 +42,7 @@ namespace HelpDesk.UWP.Dialogs
                 supportTickets.Add(ticketToEdit);
             }
 
+            var itemFromServer = JsonConvert.DeserializeObject<ItemBase>(await new WebRequestHandler().Post("http://localhost:35259/Item/AddOrUpdate", ticketToEdit));
 
         }
 

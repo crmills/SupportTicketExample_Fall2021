@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HelpDesk.API.Controllers
 {
@@ -23,6 +24,13 @@ namespace HelpDesk.API.Controllers
         public IEnumerable<ItemBase> Get()
         {
             return DataRepository.Items;
+        }
+
+        [HttpPost("AddOrUpdate")]
+        public async Task<ItemBase> AddOrUpdate([FromBody] ItemBase item)
+        {
+            DataRepository.Items.Add(item);
+            return item;
         }
     }
 }

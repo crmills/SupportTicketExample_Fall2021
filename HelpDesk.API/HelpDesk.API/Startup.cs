@@ -34,7 +34,8 @@ namespace HelpDesk.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HelpDesk.API", Version = "v1" });
             });
 
-            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.Converters.Add(
+            services.AddControllers().AddNewtonsoftJson
+                (opt => opt.SerializerSettings.Converters.Add(
                    new ItemJsonConverter()));
         }
 

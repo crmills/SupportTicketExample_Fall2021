@@ -41,12 +41,7 @@ namespace HelpDesk.UWP.ViewModels
         private JsonSerializerSettings serializationSettings;
         public MainViewModel()
         {
-            //SupportTickets = new ObservableCollection<ItemBase>();
             persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-            //SupportTickets.Add(new SupportTicket { Name = "First", Description = "First Ticket", Priority = 3 });
-            //SupportTickets.Add(new SupportTicket { Name = "Second", Description = "Third Ticket", Priority = 3 });
-            //SupportTickets.Add(new SupportTicket { Name = "Third", Description = "Third Ticket", Priority = 3 });
             SupportTickets = new ObservableCollection<ItemBase>();
             var items = JsonConvert.DeserializeObject<List<ItemBase>>(new WebRequestHandler().Get("http://localhost:35259/Item").Result);
             foreach(var item in items)

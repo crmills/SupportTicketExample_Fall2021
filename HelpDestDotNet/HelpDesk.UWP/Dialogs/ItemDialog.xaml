@@ -4,9 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HelpDesk.UWP.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Title="TITLE"
+    Title="Add New Item"
     PrimaryButtonText="Button1"
     SecondaryButtonText="Button2"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
@@ -14,10 +15,24 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Header="Title" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBox Grid.Row="1" Header="Description" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <controls:RadioButtons Grid.Row="0" SelectedIndex="1" MaxColumns="3" Header="Item Type" SelectedItem="{Binding Path=ItemType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <x:String>Bug</x:String>
+            <x:String>Support Ticket</x:String>
+        </controls:RadioButtons>
+        <TextBox Grid.Row="1" Header="Title" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="2" Header="Description" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <Grid Grid.Row="3" Visibility="{Binding Path=ShowBug, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>BUG</TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="3" Visibility="{Binding Path=ShowTicket, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>Support Ticket</TextBlock>
+        </Grid>
     </Grid>
 </ContentDialog>
