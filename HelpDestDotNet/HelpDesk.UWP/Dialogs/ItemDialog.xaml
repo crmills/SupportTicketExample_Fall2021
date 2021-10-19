@@ -5,7 +5,7 @@
     xmlns:local="using:HelpDesk.UWP.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls" xmlns:viewmodels="using:HelpDesk.UWP.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ItemDialogViewModel}"
     mc:Ignorable="d"
     Title="Add New Item"
     PrimaryButtonText="Button1"
@@ -24,8 +24,8 @@
             <x:String>Bug</x:String>
             <x:String>Support Ticket</x:String>
         </controls:RadioButtons>
-        <TextBox Grid.Row="1" Header="Title" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBox Grid.Row="2" Header="Description" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="1" Header="Title" Text="{Binding Path=BackingItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="2" Header="Description" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Path=BackingItem.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
         <Grid Grid.Row="3" Visibility="{Binding Path=ShowBug, UpdateSourceTrigger=PropertyChanged}">
             <TextBlock>BUG</TextBlock>

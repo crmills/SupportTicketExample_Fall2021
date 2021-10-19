@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HelpDesk.API.Controllers
@@ -26,10 +27,26 @@ namespace HelpDesk.API.Controllers
             return DataRepository.Items;
         }
 
-        [HttpPost("AddOrUpdate")]
-        public async Task<ItemBase> AddOrUpdate([FromBody] ItemBase item)
+        [HttpGet("GetById/{id}")]
+        public ItemBase GetById(int id)
         {
-            DataRepository.Items.Add(item);
+            return new SupportTicket { };
+        }
+
+        [HttpPost("AddOrUpdate")]
+        public ItemBase AddOrUpdate([FromBody] ItemBase item)
+        {
+            if(item.Id <= 0)
+            {
+                DataRepository.AddItem(item);
+            } else
+            {
+                var itemToEdit = DataRepository.Items.FirstOrDefault(i => i.Id == item.Id);
+                var index = DataRepository.Items.IndexOf(itemToEdit);
+                DataRepository.Items.RemoveAt(index);
+                DataRepository.Items.Insert(index, item);
+            }
+
             return item;
         }
     }

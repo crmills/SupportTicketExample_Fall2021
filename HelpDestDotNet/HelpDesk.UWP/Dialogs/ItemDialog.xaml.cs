@@ -30,7 +30,7 @@ namespace HelpDesk.UWP.Dialogs
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var ticketToEdit = DataContext as SupportTicket;
+            var ticketToEdit = (DataContext as ItemDialogViewModel)?.BackingItem;
             var i = supportTickets.IndexOf(ticketToEdit);
             if (i >= 0)
             {

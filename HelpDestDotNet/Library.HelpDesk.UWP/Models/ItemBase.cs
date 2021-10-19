@@ -11,8 +11,6 @@ namespace Library.HelpDesk.Models
     [JsonConverter(typeof(ItemJsonConverter))]
     public class ItemBase
     {
-        private static int currentId = 1;
-        private int _id = -1;
 
         object _lock = new object();
 
@@ -20,21 +18,19 @@ namespace Library.HelpDesk.Models
         {
         }
 
-        public int Id { 
+        public int Id { get; set; }
+
+        private string name;
+        public string Name {
             get
             {
-                lock(_lock)
-                {
-                    if (_id < 0)
-                    {
-                        _id = currentId++;
-                    }
-                    return _id;
-                }
-
+                return name;
             }
+            set
+            {
+                name = value;
+            } 
         }
-        public string Name { get; set; }
         public string Description { get; set; }
         public int Priority { get; set; }
 

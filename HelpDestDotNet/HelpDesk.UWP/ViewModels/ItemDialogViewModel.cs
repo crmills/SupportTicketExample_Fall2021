@@ -49,8 +49,13 @@ namespace HelpDesk.UWP.ViewModels
                 return itemType;
             } 
             set {
+                if(BackingItem != null && BackingItem.Id > 0)
+                {
+                    return;
+                }
                 if(value != null && !value.Equals(itemType, StringComparison.InvariantCultureIgnoreCase))
                 {
+                    
                     itemType = value;
                     if (value.Equals("Support Ticket", StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -62,9 +67,10 @@ namespace HelpDesk.UWP.ViewModels
                     }
                     else
                     {
-                        BackingItem = null; //bad things are afoot
+                        BackingItem = new ItemBase(); //bad things are afoot
                     }
                     NotifyPropertyChanged();
+                    NotifyPropertyChanged("BackingItem");
                     NotifyPropertyChanged("ShowBug");
                     NotifyPropertyChanged("ShowTicket");
                 }
