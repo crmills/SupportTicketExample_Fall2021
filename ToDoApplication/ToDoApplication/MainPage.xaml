@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="ToDoApplication.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ToDoApplication"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Row="0" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" ItemsSource="{Binding Path=ToDoList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="0 0 10 0" Grid.Row="0" Grid.Column="0" Text="{Binding IsCompleted, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Margin="0 0 10 0" Grid.Row="1" Grid.Column="0" Text="{Binding Description}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Priority}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button FontSize="48" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Add" Click="Add_Click"></Button>
+        <Button FontSize="48" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Edit" Click="Edit_Click"></Button>
+        <Button FontSize="48" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Complete Task" Click="Complete_Click"></Button>
+        <Button FontSize="48" Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Remove" Click="Remove_Click"></Button>
+        <Button FontSize="48" Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Remove" Click="Save_Click"></Button>
+    </Grid>
+</Page>
