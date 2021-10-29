@@ -49,6 +49,7 @@ namespace ToDoApplication
         {
             var todoDialog = new ToDoDialog((DataContext as MainViewModel).ToDoList);
             await todoDialog.ShowAsync();
+            (DataContext as MainViewModel).RefreshList();
         }
 
         private async void Edit_Click(object sender, RoutedEventArgs e)
@@ -56,6 +57,7 @@ namespace ToDoApplication
             var dataContext = DataContext as MainViewModel;
             var todoDialog = new ToDoDialog(dataContext.SelectedItem, dataContext.ToDoList);
             await todoDialog.ShowAsync();
+            (DataContext as MainViewModel).RefreshList();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -71,6 +73,16 @@ namespace ToDoApplication
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainViewModel).SaveState();
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).RefreshList();
+        }
+
+        private void Sort_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).Sort();
         }
     }
 }

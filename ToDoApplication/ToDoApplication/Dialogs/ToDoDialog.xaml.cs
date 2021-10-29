@@ -58,7 +58,7 @@ namespace ToDoApplication.Dialogs
                     _todoList.Add(appointment);
                 }
             }
-
+            
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

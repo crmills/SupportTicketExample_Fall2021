@@ -15,6 +15,8 @@ namespace ToDoApplication
         {
             BoundStart = DateTime.Today;
             BoundEnd = DateTime.Today.AddDays(1);
+
+            Priority = 10;
         }
         public override Visibility IsCompleteable => Visibility.Collapsed;
         public ObservableCollection<string> Attendees { get; set; }
@@ -31,6 +33,7 @@ namespace ToDoApplication
                 boundStart = value;
                 StartTime = boundStart.Date;
                 NotifyPropertyChanged("StartTime");
+                NotifyPropertyChanged("SecondaryText");
             }
         }
         public DateTime EndTime { get; set; }

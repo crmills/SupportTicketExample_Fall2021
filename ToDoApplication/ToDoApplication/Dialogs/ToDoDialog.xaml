@@ -43,6 +43,7 @@
                 <TextBox Text="{Binding Path=BoundToDo.Description, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
             </Grid>
         </Grid>
+        <!--APPOINTMENT CARD-->
         <Grid Grid.Row="1" Grid.ColumnSpan="2"  Visibility="{Binding IsAppointmentVisible}">
             <Grid>
                 <Grid.RowDefinitions>

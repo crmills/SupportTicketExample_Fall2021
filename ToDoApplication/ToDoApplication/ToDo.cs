@@ -45,5 +45,9 @@ namespace ToDoApplication
             Id = FakeDatabase.LastTodoId;
         }
 
+        public ToDo()
+        {
+            Priority = 1;
+        }
     }
 }
