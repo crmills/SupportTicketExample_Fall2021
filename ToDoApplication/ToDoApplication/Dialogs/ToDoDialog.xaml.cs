@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using ToDoApplication.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -20,35 +21,42 @@ namespace ToDoApplication.Dialogs
 {
     public sealed partial class ToDoDialog : ContentDialog
     {
-        private IList<ToDo> _todoList;
-        public ToDoDialog(IList<ToDo> todoList)
+        private IList<Item> _todoList;
+        public ToDoDialog(IList<Item> todoList)
         {
             this.InitializeComponent();
-            DataContext = new ToDo();
+            DataContext = new DialogViewModel(null);
             _todoList = todoList;
         }
 
-        public ToDoDialog(ToDo selectedToDo, IList<ToDo> todoList)
+        public ToDoDialog(Item selectedToDo, IList<Item> todoList)
         {
             this.InitializeComponent();
-            DataContext = selectedToDo;
+            DataContext = new DialogViewModel(selectedToDo);
             _todoList = todoList;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var todo = DataContext as ToDo;
-            var todoIsNew = todo.Id <= 0;
-            todo.SetId();
-            if(todoIsNew)
+            var context = DataContext as DialogViewModel;
+            if(context.BoundToDo != null)
             {
-                _todoList.Add(todo);
-            } else
+                var todo = context.BoundToDo;
+                if(todo.Id <= 0)
+                {
+                    FakeDatabase.LastTodoId++;
+                    todo.Id = FakeDatabase.LastTodoId;
+                    _todoList.Add(todo);
+                }
+            } else if (context.BoundAppointment != null)
             {
-                var todoToEdit = _todoList.FirstOrDefault(t => t.Id == todo.Id);
-                var index = _todoList.IndexOf(todoToEdit);
-                _todoList.RemoveAt(index);
-                _todoList.Insert(index, todo);
+                var appointment = context.BoundAppointment;
+                if(appointment.Id <= 0)
+                {
+                    FakeDatabase.LastTodoId++;
+                    appointment.Id = FakeDatabase.LastTodoId;
+                    _todoList.Add(appointment);
+                }
             }
 
         }

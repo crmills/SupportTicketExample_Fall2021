@@ -14,22 +14,30 @@ namespace ToDoApplication.ViewModels
     {
         internal static string PersistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\SaveData.json";
         internal static JsonSerializerSettings Settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        public ObservableCollection<ToDo> ToDoList { get; set; }
+        public ObservableCollection<Item> ToDoList { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public ToDo SelectedItem { get; set; }
+        public Item SelectedItem { get; set; }
         public MainViewModel()
         {
-            ToDoList = new ObservableCollection<ToDo>();
+            ToDoList = new ObservableCollection<Item>();
+        }
+
+        public void RemoveItem()
+        {
+            if(SelectedItem != null)
+            {
+                ToDoList.Remove(SelectedItem);
+            }
         }
 
         public void ToggleCompleteness()
         {
-            if(SelectedItem == null)
+            if(SelectedItem == null || (SelectedItem as ToDo) == null)
             {
                 return;
             }
-            SelectedItem.IsCompleted = !SelectedItem.IsCompleted;
+            (SelectedItem as ToDo).IsCompleted = !(SelectedItem as ToDo).IsCompleted;
         }
 
         public void SaveState()

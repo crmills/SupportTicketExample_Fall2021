@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE"
+    Title="Item Details"
     PrimaryButtonText="Ok"
     SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
@@ -14,20 +14,68 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"></TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}"></TextBox>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Description"></TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description, Mode=TwoWay}"></TextBox>
-        <CheckBox Grid.Row="2" Grid.Column="0" IsChecked="{Binding IsCompleted, Mode=TwoWay}" Content="Complete"></CheckBox>
-        <!--<TextBox Grid.Row="2" Grid.Column="0" Text="{Binding IsCompleted, Mode=TwoWay}"></TextBox>-->
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Priority, Mode=TwoWay}"></TextBox>
+        <RadioButton Content="ToDo" GroupName="ItemType" Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsTodo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></RadioButton>
+        <RadioButton Content="Appointment" GroupName="ItemType" Grid.Row="0" Grid.Column="1" IsChecked="{Binding !IsTodo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></RadioButton>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2"  Visibility="{Binding IsToDoVisible}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="Completed" IsChecked="{Binding Path=BoundToDo.IsCompleted, Mode=TwoWay}" Grid.Row="0" Grid.Column="3"></CheckBox>
+                <TextBlock Text="Name" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
+                <TextBox Text="{Binding Path=BoundToDo.Name, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
+                <TextBlock Text="Description" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
+                <TextBox Text="{Binding Path=BoundToDo.Description, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2"  Visibility="{Binding IsAppointmentVisible}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Description"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Start"></TextBlock>
+                <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.BoundStart, Mode=TwoWay}"></DatePicker>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="End"></TextBlock>
+                <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.BoundEnd, Mode=TwoWay}"></DatePicker>
+                <Grid Grid.Row="4" Grid.ColumnSpan="4" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding Path=BoundAppointment.AttendeesString, Mode=TwoWay}"></TextBox>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Path=BoundAppointment.Attendees}"></ListBox>
+                </Grid>
+                
+            </Grid>
+        </Grid>
     </Grid>
 </ContentDialog>

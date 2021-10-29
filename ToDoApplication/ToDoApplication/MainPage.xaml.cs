@@ -60,7 +60,7 @@ namespace ToDoApplication
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-
+            (DataContext as MainViewModel).RemoveItem();
         }
 
         private void Complete_Click(object sender, RoutedEventArgs e)

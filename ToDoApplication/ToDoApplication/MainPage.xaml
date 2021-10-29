@@ -23,7 +23,7 @@
         <ListBox Grid.Row="0" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" ItemsSource="{Binding Path=ToDoList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <!--<Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -36,14 +36,27 @@
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}"></TextBlock>
                         <TextBlock Margin="0 0 10 0" Grid.Row="1" Grid.Column="0" Text="{Binding Description}"></TextBlock>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Priority}"></TextBlock>
+                    </Grid>-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="18*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" Visibility="{Binding Path=IsCompleteable, UpdateSourceTrigger=PropertyChanged}" Margin="0" IsChecked="{Binding Completed, Mode=TwoWay}"></CheckBox>
+                        <TextBlock Grid.Column="1" Text="{Binding PrimaryText, UpdateSourceTrigger=PropertyChanged}" FontWeight="SemiBold" Margin="0 5 0 0"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="{Binding SecondaryText, UpdateSourceTrigger=PropertyChanged}" Margin="15 5 0 0"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button FontSize="48" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Add" Click="Add_Click"></Button>
-        <Button FontSize="48" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Edit" Click="Edit_Click"></Button>
-        <Button FontSize="48" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Complete Task" Click="Complete_Click"></Button>
-        <Button FontSize="48" Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Remove" Click="Remove_Click"></Button>
-        <Button FontSize="48" Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Remove" Click="Save_Click"></Button>
+        <Button FontSize="24" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Add" Click="Add_Click"></Button>
+        <Button FontSize="24" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Edit" Click="Edit_Click"></Button>
+        <Button FontSize="24" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Complete Task" Click="Complete_Click"></Button>
+        <Button FontSize="24" Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Remove" Click="Remove_Click"></Button>
+        <Button FontSize="24" Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Save" Click="Save_Click"></Button>
     </Grid>
 </Page>
