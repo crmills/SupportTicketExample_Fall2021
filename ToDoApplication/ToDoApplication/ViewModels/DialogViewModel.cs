@@ -6,14 +6,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Library.ToDoApplication.Models;
 
 namespace ToDoApplication.ViewModels
 {
     public class DialogViewModel: INotifyPropertyChanged
     {
         private IList<Item> _itemList;
-        public ToDo BoundToDo { get; set; }
-        public Appointment BoundAppointment { get; set; }
+        public ToDoViewModel BoundToDo { get; set; }
+        public AppointmentViewModel BoundAppointment { get; set; }
 
         private bool isTodo;
 
@@ -28,16 +29,16 @@ namespace ToDoApplication.ViewModels
             {
                 isTodo = value;
 
-                if((BoundToDo == null || BoundToDo.Id <=0) && (BoundAppointment == null || BoundAppointment.Id <=0))
+                if((BoundToDo == null || BoundToDo.Item.Id <=0) && (BoundAppointment == null || BoundAppointment.Item.Id <=0))
                 {
                     if (isTodo)
                     {
-                        BoundToDo = new ToDo();
+                        BoundToDo = new ToDoViewModel();
                         BoundAppointment = null;
                     }
                     else
                     {
-                        BoundAppointment = new Appointment();
+                        BoundAppointment = new AppointmentViewModel();
                         BoundToDo = null;
                     }
                 }
@@ -65,18 +66,18 @@ namespace ToDoApplication.ViewModels
             }
         }
         
-        public DialogViewModel(Item item)
+        public DialogViewModel(ItemViewModel itemViewModel)
         {
-            if(item is Appointment)
+            if(itemViewModel is AppointmentViewModel)
             {
-                BoundAppointment = item as Appointment;
+                BoundAppointment = itemViewModel as AppointmentViewModel;
                 BoundToDo = null;
                 IsTodo = false;
 
                 NotifyPropertyChanged("BoundAppointment");
-            } else if (item is ToDo)
+            } else if (itemViewModel is ToDoViewModel)
             {
-                BoundToDo = item as ToDo;
+                BoundToDo = itemViewModel as ToDoViewModel;
                 BoundAppointment = null;
                 IsTodo = true;
                 NotifyPropertyChanged("BoundToDo");

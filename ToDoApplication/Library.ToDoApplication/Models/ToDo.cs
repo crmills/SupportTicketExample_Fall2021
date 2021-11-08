@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library.ToDoApplication.Persistence;
+using Library.ToDoApplication.Persistence.REMOVE;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,11 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace ToDoApplication
+namespace Library.ToDoApplication.Models.REMOVE
 {
     public class ToDo : Item, INotifyPropertyChanged
     {
-        public override Visibility IsCompleteable => Visibility.Visible;
         private bool isCompleted;
         public bool IsCompleted {
             get

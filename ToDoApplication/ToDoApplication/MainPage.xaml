@@ -57,9 +57,9 @@
                             <ColumnDefinition Width="18*"/>
                             <ColumnDefinition Width="20*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" Visibility="{Binding Path=IsCompleteable, UpdateSourceTrigger=PropertyChanged}" Margin="0" IsChecked="{Binding Completed, Mode=TwoWay}"></CheckBox>
-                        <TextBlock Grid.Column="1" Text="{Binding PrimaryText, UpdateSourceTrigger=PropertyChanged}" FontWeight="SemiBold" Margin="0 5 0 0"></TextBlock>
-                        <TextBlock Grid.Column="2" Text="{Binding SecondaryText, UpdateSourceTrigger=PropertyChanged}" Margin="15 5 0 0"></TextBlock>
+                        <CheckBox Grid.Column="0" Visibility="{Binding Path=IsCompleteable, UpdateSourceTrigger=PropertyChanged}" Margin="0" IsChecked="{Binding Path=Item.Completed, Mode=TwoWay}"></CheckBox>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=Item.PrimaryText, UpdateSourceTrigger=PropertyChanged}" FontWeight="SemiBold" Margin="0 5 0 0"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="{Binding Path=Item.SecondaryText, UpdateSourceTrigger=PropertyChanged}" Margin="15 5 0 0"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

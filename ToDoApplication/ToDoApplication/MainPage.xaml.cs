@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Library.ToDoApplication;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,8 +35,16 @@ namespace ToDoApplication
             this.InitializeComponent();
             if(File.Exists(MainViewModel.PersistencePath))
             {
-                DataContext = JsonConvert
-                    .DeserializeObject<MainViewModel>(File.ReadAllText(MainViewModel.PersistencePath), MainViewModel.Settings);
+                try
+                {
+                    DataContext = JsonConvert
+                        .DeserializeObject<MainViewModel>(File.ReadAllText(MainViewModel.PersistencePath), MainViewModel.Settings);
+                } catch(Exception e)
+                {
+                    DataContext = new MainViewModel();
+                    File.Delete(MainViewModel.PersistencePath);
+                }
+
             } else
             {
                 DataContext = new MainViewModel();

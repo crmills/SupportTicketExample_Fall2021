@@ -36,11 +36,11 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <CheckBox Content="Completed" IsChecked="{Binding Path=BoundToDo.IsCompleted, Mode=TwoWay}" Grid.Row="0" Grid.Column="3"></CheckBox>
+                <CheckBox Content="Completed" IsChecked="{Binding Path=BoundToDo.Item.IsCompleted, Mode=TwoWay}" Grid.Row="0" Grid.Column="3"></CheckBox>
                 <TextBlock Text="Name" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
-                <TextBox Text="{Binding Path=BoundToDo.Name, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
+                <TextBox Text="{Binding Path=BoundToDo.Item.Name, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
                 <TextBlock Text="Description" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
-                <TextBox Text="{Binding Path=BoundToDo.Description, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
+                <TextBox Text="{Binding Path=BoundToDo.Item.Description, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"></TextBox>
             </Grid>
         </Grid>
         <!--APPOINTMENT CARD-->
@@ -60,20 +60,20 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"></TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Item.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Description"></TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=BoundAppointment.Item.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Start"></TextBlock>
-                <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.BoundStart, Mode=TwoWay}"></DatePicker>
+                <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.Item.BoundStart, Mode=TwoWay}"></DatePicker>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="End"></TextBlock>
-                <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.BoundEnd, Mode=TwoWay}"></DatePicker>
+                <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Date="{Binding Path=BoundAppointment.Item.BoundEnd, Mode=TwoWay}"></DatePicker>
                 <Grid Grid.Row="4" Grid.ColumnSpan="4" >
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Text="{Binding Path=BoundAppointment.AttendeesString, Mode=TwoWay}"></TextBox>
-                    <ListBox Grid.Row="1" ItemsSource="{Binding Path=BoundAppointment.Attendees}"></ListBox>
+                    <TextBox Grid.Row="0" Text="{Binding Path=BoundAppointment.Item.AttendeesString, Mode=TwoWay}"></TextBox>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Path=BoundAppointment.Item.Attendees}"></ListBox>
                 </Grid>
                 
             </Grid>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToDoApplication
+namespace Library.ToDoApplication.Persistence
 {
-    static class FakeDatabase
+    public static class FakeDatabase
     {
 
         public static int LastTodoId

@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Library.ToDoApplication.Models;
+using Library.ToDoApplication.Persistence;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,15 +23,15 @@ namespace ToDoApplication.Dialogs
 {
     public sealed partial class ToDoDialog : ContentDialog
     {
-        private IList<Item> _todoList;
-        public ToDoDialog(IList<Item> todoList)
+        private IList<ItemViewModel> _todoList;
+        public ToDoDialog(IList<ItemViewModel> todoList)
         {
             this.InitializeComponent();
             DataContext = new DialogViewModel(null);
             _todoList = todoList;
         }
 
-        public ToDoDialog(Item selectedToDo, IList<Item> todoList)
+        public ToDoDialog(ItemViewModel selectedToDo, IList<ItemViewModel> todoList)
         {
             this.InitializeComponent();
             DataContext = new DialogViewModel(selectedToDo);
@@ -42,19 +44,19 @@ namespace ToDoApplication.Dialogs
             if(context.BoundToDo != null)
             {
                 var todo = context.BoundToDo;
-                if(todo.Id <= 0)
+                if(todo.Item.Id <= 0)
                 {
                     FakeDatabase.LastTodoId++;
-                    todo.Id = FakeDatabase.LastTodoId;
+                    todo.Item.Id = FakeDatabase.LastTodoId;
                     _todoList.Add(todo);
                 }
             } else if (context.BoundAppointment != null)
             {
                 var appointment = context.BoundAppointment;
-                if(appointment.Id <= 0)
+                if(appointment.Item.Id <= 0)
                 {
                     FakeDatabase.LastTodoId++;
-                    appointment.Id = FakeDatabase.LastTodoId;
+                    appointment.Item.Id = FakeDatabase.LastTodoId;
                     _todoList.Add(appointment);
                 }
             }

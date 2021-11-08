@@ -5,9 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
-namespace ToDoApplication
+namespace Library.ToDoApplication.Models
 {
     public class Appointment : Item, INotifyPropertyChanged
     {
@@ -18,7 +17,6 @@ namespace ToDoApplication
 
             Priority = 10;
         }
-        public override Visibility IsCompleteable => Visibility.Collapsed;
         public ObservableCollection<string> Attendees { get; set; }
         public DateTime StartTime { get; set; }
         private DateTimeOffset boundStart;

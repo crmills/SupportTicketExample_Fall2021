@@ -7,11 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace ToDoApplication
+namespace Library.ToDoApplication.Models.REMOVE
 {
     public class Item : INotifyPropertyChanged
-    {
-        public virtual Visibility IsCompleteable {get;}
+    { 
         public int Id
         {
             get; set;
