@@ -20,6 +20,12 @@ namespace Api.ToDoApplication.Controllers
             return new Appointment();
         }
 
+        [HttpGet]
+        public IEnumerable<Appointment> Get()
+        {
+            return Database.Appointments;
+        }
+
         [HttpPost("AddOrUpdate")]
         public Appointment AddOrUpdate([FromBody] Appointment appointment)
         {

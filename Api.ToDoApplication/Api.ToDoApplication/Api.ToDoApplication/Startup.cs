@@ -1,3 +1,4 @@
+using Library.ToDo.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,9 +34,9 @@ namespace Api.ToDoApplication
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api.ToDoApplication", Version = "v1" });
             });
 
-            //services.AddControllers().AddNewtonsoftJson
-            //(opt => opt.SerializerSettings.Converters.Add(
-            //   new ItemJsonConverter()));
+            services.AddControllers().AddNewtonsoftJson
+            (opt => opt.SerializerSettings.Converters.Add(
+               new ItemJsonConverter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

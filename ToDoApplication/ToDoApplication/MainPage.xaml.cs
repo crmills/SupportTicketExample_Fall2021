@@ -1,4 +1,6 @@
-﻿using Library.ToDoApplication;
+﻿using Library.ToDo.Communication;
+using Library.ToDoApplication;
+using Library.ToDoApplication.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,22 +35,30 @@ namespace ToDoApplication
         public MainPage()
         {
             this.InitializeComponent();
-            if(File.Exists(MainViewModel.PersistencePath))
-            {
-                try
-                {
-                    DataContext = JsonConvert
-                        .DeserializeObject<MainViewModel>(File.ReadAllText(MainViewModel.PersistencePath), MainViewModel.Settings);
-                } catch(Exception e)
-                {
-                    DataContext = new MainViewModel();
-                    File.Delete(MainViewModel.PersistencePath);
-                }
+            //if(File.Exists(MainViewModel.PersistencePath))
+            //{
+            //    try
+            //    {
+            //        DataContext = JsonConvert
+            //            .DeserializeObject<MainViewModel>(File.ReadAllText(MainViewModel.PersistencePath), MainViewModel.Settings);
+            //    } catch(Exception e)
+            //    {
+            //        DataContext = new MainViewModel();
+            //        File.Delete(MainViewModel.PersistencePath);
+            //    }
 
-            } else
-            {
-                DataContext = new MainViewModel();
-            }
+            //} else
+            //{
+            //    DataContext = new MainViewModel();
+            //}
+            var mainViewModel = new MainViewModel();
+            var todoString = new WebRequestHandler().Get("http://localhost:14102/ToDo").Result;
+            var todos = JsonConvert.DeserializeObject<List<ToDo>>(todoString);
+            todos.ForEach(t => mainViewModel.ToDoList.Add(new ToDoViewModel(t)));
+            var appointmentsString = new WebRequestHandler().Get("http://localhost:14102/Appointment");
+            var appointments = JsonConvert.DeserializeObject<List<Appointment>>(todoString);
+            appointments.ForEach(a => mainViewModel.ToDoList.Add(new AppointmentViewModel(a)));
+
 
         }
 

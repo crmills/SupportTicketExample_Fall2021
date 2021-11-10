@@ -1,4 +1,6 @@
-﻿using Library.ToDoApplication.Persistence;
+﻿using Library.ToDo.Persistence;
+using Library.ToDoApplication.Persistence;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Library.ToDoApplication.Models
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class ToDo : Item, INotifyPropertyChanged
     {
         private bool isCompleted;

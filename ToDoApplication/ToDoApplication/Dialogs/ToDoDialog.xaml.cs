@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Library.ToDoApplication.Models;
 using Library.ToDoApplication.Persistence;
+using Library.ToDo.Communication;
+using System.Threading.Tasks;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -38,7 +40,7 @@ namespace ToDoApplication.Dialogs
             _todoList = todoList;
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var context = DataContext as DialogViewModel;
             if(context.BoundToDo != null)
@@ -49,6 +51,8 @@ namespace ToDoApplication.Dialogs
                     FakeDatabase.LastTodoId++;
                     todo.Item.Id = FakeDatabase.LastTodoId;
                     _todoList.Add(todo);
+
+                    await new WebRequestHandler().Post("http://localhost:14102/ToDo/AddOrUpdate", todo.Item);
                 }
             } else if (context.BoundAppointment != null)
             {

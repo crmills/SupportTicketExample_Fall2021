@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library.ToDo.Persistence;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Library.ToDoApplication.Models
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class Appointment : Item, INotifyPropertyChanged
     {
         public Appointment()
