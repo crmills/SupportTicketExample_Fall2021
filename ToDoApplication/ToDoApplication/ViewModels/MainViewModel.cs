@@ -55,7 +55,9 @@ namespace ToDoApplication.ViewModels
         {
             if(SelectedItem != null)
             {
+                //make a web call to delete this same item on the server
                 ToDoList.Remove(SelectedItem);
+
             }
         }
 

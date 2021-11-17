@@ -47,5 +47,22 @@ namespace Api.ToDoApplication.Controllers
 
             return appointment;
         }
+
+        [HttpGet("Delete/{id}")]
+        public bool Delete(int id)
+        {
+            try
+            {
+                var appToRemove = Database.Appointments.FirstOrDefault(a => a.Id == appointment.Id);
+                Database.Appointments.Remove(appToRemove);
+
+            } catch(Exception)
+            {
+                return false;
+            }
+
+
+            return true;
+        }
     }
 }

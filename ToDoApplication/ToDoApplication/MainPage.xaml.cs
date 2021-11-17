@@ -55,10 +55,12 @@ namespace ToDoApplication
             var todoString = new WebRequestHandler().Get("http://localhost:14102/ToDo").Result;
             var todos = JsonConvert.DeserializeObject<List<ToDo>>(todoString);
             todos.ForEach(t => mainViewModel.ToDoList.Add(new ToDoViewModel(t)));
-            var appointmentsString = new WebRequestHandler().Get("http://localhost:14102/Appointment");
-            var appointments = JsonConvert.DeserializeObject<List<Appointment>>(todoString);
+            var appointmentsString = new WebRequestHandler().Get("http://localhost:14102/Appointment").Result;
+            var appointments = JsonConvert.DeserializeObject<List<Appointment>>(appointmentsString);
             appointments.ForEach(a => mainViewModel.ToDoList.Add(new AppointmentViewModel(a)));
 
+            DataContext = mainViewModel;
+            (DataContext as MainViewModel).RefreshList();
 
         }
 
