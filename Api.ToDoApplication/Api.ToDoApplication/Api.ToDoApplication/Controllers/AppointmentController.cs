@@ -53,7 +53,7 @@ namespace Api.ToDoApplication.Controllers
         {
             try
             {
-                var appToRemove = Database.Appointments.FirstOrDefault(a => a.Id == appointment.Id);
+                var appToRemove = Database.Appointments.FirstOrDefault(a => a.Id == id);
                 Database.Appointments.Remove(appToRemove);
 
             } catch(Exception)
