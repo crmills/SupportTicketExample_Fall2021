@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Library.ToDoApplication.Models;
+using MongoDB.Bson;
 
 namespace ToDoApplication.ViewModels
 {
@@ -29,7 +30,7 @@ namespace ToDoApplication.ViewModels
             {
                 isTodo = value;
 
-                if((BoundToDo == null || BoundToDo.Item.Id <=0) && (BoundAppointment == null || BoundAppointment.Item.Id <=0))
+                if(BoundToDo == null || (string.IsNullOrEmpty(BoundToDo.Item._id) && (BoundAppointment == null || string.IsNullOrEmpty(BoundAppointment.Item._id))))
                 {
                     if (isTodo)
                     {

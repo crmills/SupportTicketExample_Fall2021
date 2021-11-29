@@ -9,6 +9,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Library.ToDoApplication.Models;
+using Library.ToDo.Communication;
+using Library.ToDo.Models;
 
 namespace ToDoApplication.ViewModels
 {
@@ -28,9 +30,21 @@ namespace ToDoApplication.ViewModels
                     return isSortedAsc 
                         ? new ObservableCollection<ItemViewModel>(ToDoList.OrderBy(t => t.Item.Priority)) 
                         : new ObservableCollection<ItemViewModel>(ToDoList.OrderByDescending(t => t.Item.Priority));
+                    //Perform the same algorithm from your "on load" read, but apply a sort order
+                } else
+                {
+                    //get the todos that match the query
+                    var response = new WebRequestHandler().Post("http://localhost:14102/ToDo/Search", new QueryDTO { QueryText = Query }).Result;
+                    //get the appointments that match the query
+                    //merge the lists into a central list
+
+                    //add a filter for show incomplete
+
+                    //sort appropriately using the isSortedAsc flag
                 }
 
-                return isSortedAsc
+
+                var list = isSortedAsc
                     ? new ObservableCollection<ItemViewModel>(
                     ToDoList.Where(t => t.Item.Name.ToUpper().Contains(Query.ToUpper()) 
                     || t.Item.Description.ToUpper().Contains(Query.ToUpper())
@@ -41,6 +55,8 @@ namespace ToDoApplication.ViewModels
                     || t.Item.Description.ToUpper().Contains(Query.ToUpper())
                     || ((t.Item is Appointment) && (t.Item as Appointment).Attendees.Any(s => s.Contains(Query)))
                     ).OrderByDescending(t => t.Item.Priority));
+
+                return list;
             }
         }
 

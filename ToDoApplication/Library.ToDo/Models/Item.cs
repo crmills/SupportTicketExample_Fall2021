@@ -1,4 +1,6 @@
 ﻿using Library.ToDo.Persistence;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,20 @@ namespace Library.ToDoApplication.Models
 {
     [JsonConverter(typeof(ItemJsonConverter))]
     public class Item : INotifyPropertyChanged
-    { 
-        public int Id
+    {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id
         {
             get; set;
         }
 
+        [BsonElement("name")]
         private string name;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [BsonIgnore]
         public string Name
         {
             get
@@ -37,7 +43,9 @@ namespace Library.ToDoApplication.Models
             }
         }
 
+        [BsonElement("description")]
         private string description;
+        [BsonIgnore]
         public string Description { 
             get
             {
@@ -52,6 +60,7 @@ namespace Library.ToDoApplication.Models
             }
         }
 
+        [BsonElement("priority")]
         public int Priority { get; set; }
 
         public virtual string PrimaryText { get; }

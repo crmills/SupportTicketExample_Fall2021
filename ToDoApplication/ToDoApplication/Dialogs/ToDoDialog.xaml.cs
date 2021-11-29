@@ -18,6 +18,8 @@ using Library.ToDoApplication.Models;
 using Library.ToDoApplication.Persistence;
 using Library.ToDo.Communication;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using Newtonsoft.Json;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -46,22 +48,15 @@ namespace ToDoApplication.Dialogs
             if(context.BoundToDo != null)
             {
                 var todo = context.BoundToDo;
-                if(todo.Item.Id <= 0)
-                {
-                    FakeDatabase.LastTodoId++;
-                    todo.Item.Id = FakeDatabase.LastTodoId;
-                    _todoList.Add(todo);
-
-                    await new WebRequestHandler().Post("http://localhost:14102/ToDo/AddOrUpdate", todo.Item);
-                }
+                var newToDoResponse = await new WebRequestHandler().Post("http://localhost:14102/ToDo/AddOrUpdate", todo.Item);
+                var newToDo = JsonConvert.DeserializeObject<ToDo>(newToDoResponse);
+                _todoList.Add(new ToDoViewModel(newToDo));
             } else if (context.BoundAppointment != null)
             {
                 var appointment = context.BoundAppointment;
-                if(appointment.Item.Id <= 0)
+                if(string.IsNullOrEmpty(appointment.Item._id))
                 {
-                    FakeDatabase.LastTodoId++;
-                    appointment.Item.Id = FakeDatabase.LastTodoId;
-                    _todoList.Add(appointment);
+//see above
                 }
             }
             

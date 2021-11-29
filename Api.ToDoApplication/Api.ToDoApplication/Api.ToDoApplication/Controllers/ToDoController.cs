@@ -1,4 +1,5 @@
 ﻿using Api.ToDoApplication.Persistence;
+using Library.ToDo.Models;
 using Library.ToDoApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@ namespace Api.ToDoApplication.Controllers
         [HttpGet]
         public IEnumerable<ToDo> Get()
         {
-            return Database.ToDos;
+            return Database.Current.ToDos;
         }
 
         [HttpGet("GetItem")]
@@ -30,7 +31,14 @@ namespace Api.ToDoApplication.Controllers
         [HttpPost("AddOrUpdate")]
         public Item Receive([FromBody] ToDo todo)
         {
-            return todo;
+            return Database.Current.AddOrUpdate(todo);
+        }
+
+        [HttpPost("Search")]
+        public IList<ToDo> Search(QueryDTO query)
+        {
+            return Database.Current.ToDos
+                .Where(t => t.Name.ToUpper().Contains(query.QueryText) || t.Description.ToUpper().Contains(query.QueryText)).ToList();
         }
     }
 }

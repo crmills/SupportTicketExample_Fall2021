@@ -1,5 +1,6 @@
 ﻿using Library.ToDo.Persistence;
 using Library.ToDoApplication.Persistence;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,10 @@ namespace Library.ToDoApplication.Models
     [JsonConverter(typeof(ItemJsonConverter))]
     public class ToDo : Item, INotifyPropertyChanged
     {
+        [BsonElement("isCompleted"), BsonRequired]
         private bool isCompleted;
+
+        [BsonIgnore]
         public bool IsCompleted {
             get
             {
@@ -28,23 +32,18 @@ namespace Library.ToDoApplication.Models
             }
         }
 
+        [BsonIgnore]
         public override bool Completed { get => IsCompleted; set => IsCompleted = value; }
+        [BsonElement("deadline")]
         public DateTime Deadline { get; set; }
+
+        [BsonIgnore]
         public override string PrimaryText => $"ToDo: {Name} - {Description}";
+        [BsonIgnore]
         public override string SecondaryText => $"{Priority} {IsCompleted}";
         public override string ToString()
         {
             return $"{IsCompleted} [{Priority}] {Name} - {Description}";
-        }
-
-        public void SetId()
-        {
-            if(Id > 0)
-            {
-                return;
-            }
-            FakeDatabase.LastTodoId++;
-            Id = FakeDatabase.LastTodoId;
         }
 
         public ToDo()
