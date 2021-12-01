@@ -31,7 +31,8 @@ namespace Api.ToDoApplication.Controllers
         [HttpPost("AddOrUpdate")]
         public Item Receive([FromBody] ToDo todo)
         {
-            return Database.Current.AddOrUpdate(todo);
+            Database.Current.AddOrUpdate(todo);
+            return todo;
         }
 
         [HttpPost("Search")]

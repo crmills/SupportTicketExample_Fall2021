@@ -1,12 +1,9 @@
 ﻿using Library.ToDo.Persistence;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.ToDoApplication.Models
 {
@@ -20,9 +17,15 @@ namespace Library.ToDoApplication.Models
 
             Priority = 10;
         }
+        [BsonElement("Attendees")]
         public ObservableCollection<string> Attendees { get; set; }
+
+        [BsonElement("StartTime")]
         public DateTime StartTime { get; set; }
+
+        [BsonIgnore]
         private DateTimeOffset boundStart;
+        [BsonIgnore]
         public DateTimeOffset BoundStart
         {
             get
@@ -37,8 +40,11 @@ namespace Library.ToDoApplication.Models
                 NotifyPropertyChanged("SecondaryText");
             }
         }
+        [BsonElement("EndTime")]
         public DateTime EndTime { get; set; }
+        [BsonIgnore]
         private DateTimeOffset boundEnd;
+        [BsonIgnore]
         public DateTimeOffset BoundEnd
         {
             get
@@ -52,8 +58,9 @@ namespace Library.ToDoApplication.Models
                 NotifyPropertyChanged("EndTime");
             }
         }
-
+        [BsonIgnore]
         public override string PrimaryText => $"Appointment: {Name} - {Description}";
+        [BsonIgnore]
         public override string SecondaryText => $"{Priority} {StartTime} - {EndTime}";
     }
 }

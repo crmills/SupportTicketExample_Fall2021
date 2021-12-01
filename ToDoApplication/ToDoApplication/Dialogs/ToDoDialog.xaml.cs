@@ -48,15 +48,29 @@ namespace ToDoApplication.Dialogs
             if(context.BoundToDo != null)
             {
                 var todo = context.BoundToDo;
+                var isNew = string.IsNullOrEmpty(todo.Item._id);
                 var newToDoResponse = await new WebRequestHandler().Post("http://localhost:14102/ToDo/AddOrUpdate", todo.Item);
                 var newToDo = JsonConvert.DeserializeObject<ToDo>(newToDoResponse);
-                _todoList.Add(new ToDoViewModel(newToDo));
+                if(isNew)
+                {
+                    _todoList.Add(new ToDoViewModel(newToDo));
+                } else
+                {
+                    _todoList.FirstOrDefault(t => t.Item._id.Equals(newToDo._id)).Item = newToDo;
+                }
             } else if (context.BoundAppointment != null)
             {
-                var appointment = context.BoundAppointment;
-                if(string.IsNullOrEmpty(appointment.Item._id))
+                var app = context.BoundAppointment;
+                var isNew = string.IsNullOrEmpty(app.Item._id);
+                var newAppResponse = await new WebRequestHandler().Post("http://localhost:14102/Appointment/AddOrUpdate", app.Item);
+                var newApp = JsonConvert.DeserializeObject<Appointment>(newAppResponse);
+                if (isNew)
                 {
-//see above
+                    _todoList.Add(new AppointmentViewModel(newApp));
+                }
+                else
+                {
+                    _todoList.FirstOrDefault(t => t.Item._id.Equals(newApp._id)).Item = newApp;
                 }
             }
             

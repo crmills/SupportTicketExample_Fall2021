@@ -22,7 +22,7 @@ namespace Api.ToDoApplication.Persistence
             {
                 if(instance == null)
                 {
-                    var settings = MongoClientSettings.FromConnectionString("mongodb+srv://xdbuser:2jxmVsJs6Fz4LP2f@xidentifydev.lds8g.mongodb.net/xIdentifyDev?retryWrites=true&w=majority");
+                    var settings = MongoClientSettings.FromConnectionString("mongodb+srv://xdbuser:OIJoGwRpMQ0Rw0uU@xidentifydev.lds8g.mongodb.net/xIdentifyDev?retryWrites=true&w=majority");
                     var client = new MongoClient(settings);
                     var _db = client.GetDatabase("test");
                     instance = new Database(_db);
@@ -32,20 +32,39 @@ namespace Api.ToDoApplication.Persistence
             }
         }
 
-        public ToDo AddOrUpdate(ToDo todo)
+        public void AddOrUpdate(Item item)
         {
-            if(string.IsNullOrEmpty(todo._id))
+            if (string.IsNullOrEmpty(item._id))
             {
-                todo._id = ObjectId.GenerateNewId().ToString();
+                item._id = ObjectId.GenerateNewId().ToString();
             }
 
-            //var todoBson = BsonSerializer.Serialize(todo, );
+            //mapping for collections
+            IMongoCollection<BsonDocument> collection;
+            Item itemToPersist;
+            if (item is ToDo)
+            {
+                collection = _database.GetCollection<BsonDocument>("todos");
+                itemToPersist = item as ToDo;
+            } else if (item is Appointment)
+            {
+                collection = _database.GetCollection<BsonDocument>("appointments");
+                itemToPersist = item as Appointment;
+            } else
+            {
+                throw new TypeNotSupportedException(item.GetType().ToString());
+            }
 
-            var todoCollection = _database.GetCollection<BsonDocument>("todos");
 
-            todoCollection.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(todo._id)));
-            todoCollection.InsertOne(todo.ToBsonDocument());
-            return todo;
+            collection.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(itemToPersist._id)));
+            collection.InsertOne(itemToPersist.ToBsonDocument());
+            return;
+        }
+
+        //TODO: make a Delete method for removing ToDo and Appointment instances from MongoDB.
+        public bool Delete(string type, string id)
+        {
+            if()
         }
 
         public List<ToDo> ToDos {
@@ -69,13 +88,16 @@ namespace Api.ToDoApplication.Persistence
         {
             get
             {
-                return new List<Appointment>
+                var appBson = _database.GetCollection<BsonDocument>("appointments");
+                var data = appBson.Find(_ => true).ToList();
+                var _apps = new List<Appointment>();
+                foreach (var item in data)
                 {
-                    new Appointment { Name = "1st",
-                               Description = "First Appointment"},
-                    new Appointment { Name = "2nd",
-                               Description = "Second Appointment"}
-                };
+                    var json = item.ToJson();
+                    var obj = BsonSerializer.Deserialize<Appointment>(item);
+                    _apps.Add(obj);
+                }
+                return _apps;
             }
 
         }
@@ -86,5 +108,15 @@ namespace Api.ToDoApplication.Persistence
             _database = db;
         }
 
+    }
+
+    public class TypeNotSupportedException : Exception
+    {
+        private string _type;
+        public TypeNotSupportedException(string type)
+        {
+            _type = type;
+        }
+        public override string Message => $"Attempt was made to persist an unsupported type: {_type}";
     }
 }
