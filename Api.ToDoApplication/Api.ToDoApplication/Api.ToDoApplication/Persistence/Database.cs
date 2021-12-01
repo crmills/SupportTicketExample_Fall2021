@@ -62,10 +62,10 @@ namespace Api.ToDoApplication.Persistence
         }
 
         //TODO: make a Delete method for removing ToDo and Appointment instances from MongoDB.
-        public bool Delete(string type, string id)
-        {
-            if()
-        }
+        //public bool Delete(string type, string id)
+        //{
+        //    if()
+        //}
 
         public List<ToDo> ToDos {
             get
